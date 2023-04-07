@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+
 use App\Models\Desk;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DeskResource;
 use App\Http\Requests\DeskStoreRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class DeskController extends Controller
 {
@@ -51,9 +53,11 @@ class DeskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DeskStoreRequest $request, Desk $desk)
     {
-        //
+        $desk->update($request->validated());
+
+        return new DeskResource($desk);
     }
 
     /**
@@ -62,8 +66,11 @@ class DeskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Desk $desk)
     {
-        //
+        $desk->delete();
+
+        // return response(null, Response::HTTP_NO_CONTENT);
+        return Response::make("", 204);
     }
 }
