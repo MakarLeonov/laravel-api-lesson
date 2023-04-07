@@ -23,3 +23,7 @@ Route::get('/', function () {
 Route::apiResources([
     'desks' => DeskController::class,
 ]);
+
+// Route::get('/token', function () {
+//     return csrf_token(); 
+// });
